@@ -1,8 +1,8 @@
-function Person(name, email, movie) {
-	name: name,
-	email: email,
-	favoriteMovie: movie
-}
+function Person(userName, userEmail, userMovie) {
+	this.name = userName;
+	this.email = userEmail;
+	this.favoriteMovie = userMovie;
+};
 
 
 var name = prompt("Please enter your name.");
