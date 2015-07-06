@@ -1,0 +1,1 @@
+This is a project for day one of cohort 1 week internship
