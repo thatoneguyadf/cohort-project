@@ -1,3 +1,7 @@
+var btn = document.getElementById("btn");
+
+btn.addEventListener('click', math)
+
 function math() {
 	var numOne = prompt("Please enter a number.");
 	var numTwo = prompt("Please enter a second number.");
