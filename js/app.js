@@ -1,9 +1,15 @@
-var person = {};
+function Person(name, email, movie) {
+	name: name,
+	email: email,
+	favoriteMovie: movie
+}
 
-person.name = prompt("Please enter your name.");
-person.email = prompt("Please enter your email address.");
-person.favoriteMovie = prompt("Please enter your favorite movie.");
 
+var name = prompt("Please enter your name.");
+var email = prompt("Please enter your email address.");
+var movie = prompt("Please enter your favorite movie.");
+
+var person = new Person(name, email, movie);
 
 console.log(person);
 //console.log(person.name);
