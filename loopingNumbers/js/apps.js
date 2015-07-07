@@ -10,20 +10,15 @@ function numberLoop() {
 
 	if(isNaN(start) || isNaN(end)) {
 		alert("You must enter numbers only!");
+		return '';
 	}
-	else {
-		if(start > end) {
-			alert("The starting number must be less than the ending number.")
-		}
-		else {
-			for(start; start <= end; start++) {
-				if(start % 2 === 0) {
-					console.log(start + " is even");
-				}
-				else {
-					console.log(start + " is odd");
-				}
-			}
-		}
+
+	if(start > end) {
+		alert("The starting number must be less than the ending number.");
+		return '';
+	}
+	
+	for(start; start <= end; start++) {
+		console.log(start % 2 === 0 ? start + " is even" : start + " is odd");
 	}
 }
