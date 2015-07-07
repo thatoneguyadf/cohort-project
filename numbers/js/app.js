@@ -3,8 +3,8 @@ var btn = document.getElementById("btn");
 btn.addEventListener('click', math)
 
 function math() {
-	var numOne = prompt("Please enter a number.");
-	var numTwo = prompt("Please enter a second number.");
+	var numOne = prompt("Please enter a number.", 10);
+	var numTwo = prompt("Please enter a second number.", 10);
 
 	var parseNumOne = parseInt(numOne);
 	var parseNumTwo = parseInt(numTwo);
