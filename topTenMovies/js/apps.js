@@ -38,3 +38,10 @@ for(var i = 0; i < movies.length; i++) {
 }
 
 console.log(movies);
+
+for(var k = 0; k < movies.length; k++) {
+	var li = document.createElement('li');
+	li.textContent = movies[k];
+
+	list.appendChild(li);
+}
