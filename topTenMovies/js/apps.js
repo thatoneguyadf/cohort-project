@@ -1,5 +1,8 @@
-var list = document.getElementById("list");
+var list = document.getElementById('list');
+var button = document.getElementById('button')
 var moviesObj = [];
+
+button.addEventListener('click', find)
 
 var movies = [
 	['star wars', 121, 1977],
@@ -76,4 +79,25 @@ for(var k = 0; k < moviesObj.length; k++) {
 	li.appendChild(title);
 	li.appendChild(info);
 	list.appendChild(li);
+}
+
+//searches movie array for a specified movie
+function find() {
+	var search = prompt('What movie are you looking for?');
+
+	search = search.toLowerCase();
+
+	var present = 0;
+
+	for(var i = 0; i < moviesObj.length; i++){
+		var movie = moviesObj[i];
+		if(search === movie.title.toLowerCase()) {
+			alert(movie.title + ' was released in ' + movie.release);
+			present = 1;
+		}
+	}
+
+	if(present === 0) {
+		alert('Sorry, that movie is not on the list.')
+	}
 }
