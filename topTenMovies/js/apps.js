@@ -14,6 +14,7 @@ var movies = [
 	['the hitchhiker\'s guide to the galaxy', 109, 2005]
 ]
 
+//capitalizes first letter of a string
 function capitalize(str) {
     if (!str || typeof str !== "string") {
         return str;
@@ -22,6 +23,7 @@ function capitalize(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
 
+//cyles through movies array and calls capitalize for each word in the titles
 for(var i = 0; i < movies.length; i++) {
 	var titleWords = movies[i][0].split(' ');
 	for(var j = 0; j < titleWords.length; j++) {
@@ -39,19 +41,26 @@ for(var i = 0; i < movies.length; i++) {
 
 console.log(movies);
 
-function Movie(title, runTime, release) {
-	this.title = title;
-	this.runTime = runTime + ' min';
-	this.release = release
+//function for creating movie objects
+function movieObjectCreator(title, runTime, release) {
+	return {
+		title: title,
+		runTime: runTime + ' min',
+		release: release
+	}
 }
 
+//creates movie objects from the array and adds them to a new array
 for(var l = 0; l < movies.length; l++) {
 	var movie = movies[l];
-	var movieObj = new Movie(movie[0], movie[1], movie[2]);
+	var movieObj = movieObjectCreator.apply({}, movie);
 
 	moviesObj.push(movieObj);
 }
 
+
+//creates li containing movie title and info and pushes them onto the html
+//also loggs the movies and their info
 for(var k = 0; k < moviesObj.length; k++) {
 	var li = document.createElement('li');
 	var title = document.createElement('h2');
