@@ -59,7 +59,7 @@ for(var k = 0; k < moviesObj.length; k++) {
 
 	var movie = moviesObj[k];
 
-	console.log(movie.title + ' runs for ' + movie.runTime + ' and was released in ' + movie.release);
+	console.log('\'' + movie.title + '\'' + ' runs for ' + movie.runTime + ' and was released in ' + movie.release);
 
 	title.textContent = movie.title;
 	info.textContent = 'Run time: ' + movie.runTime + '  |   Year Released: ' + movie.release;
