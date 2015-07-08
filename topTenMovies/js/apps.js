@@ -94,6 +94,7 @@ function find() {
 		if(search === movie.title.toLowerCase()) {
 			alert(movie.title + ' was released in ' + movie.release);
 			present = 1;
+			break;
 		}
 	}
 
