@@ -12,13 +12,18 @@ h1 {
 }
 
 h2 {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     font-size: 40px;
 }
 
 div {
     margin-bottom: 70px;
     font-size: 40px;
+}
+
+button {
+    margin-bottom: 40px;
+    font-size: 20px;
 }
 
 .credit {
