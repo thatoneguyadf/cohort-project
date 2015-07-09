@@ -4,7 +4,7 @@
 
 function e(elementType, text, atributes, styles, selector) {
     var element = document.createElement(elementType);
-    element.textContent = text;
+    element.textContent = text || '';
 
     for(var attr in atributes) {
         if(atributes.hasOwnProperty(attr)) {
