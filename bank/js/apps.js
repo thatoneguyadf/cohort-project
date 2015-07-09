@@ -23,6 +23,7 @@ Bank.prototype = {
             return '';
         }
         this.balance += useNum;
+        updateBalance();
     },
     debit: function debit(num) {
         var useNum = parseInt(num);
@@ -31,6 +32,7 @@ Bank.prototype = {
             return '';
         }
         this.balance -= useNum;
+        updateBalance();
     }
 };
 
@@ -45,6 +47,7 @@ for(var i = 0; i < 3; i++) {
     credInput = parseInt(credInput);
     bank.credit(credInput);
     credLi.textContent = '$' + credInput + ' credit. Current balance: $' + bank.balance;
+    credLi.setAttribute('class', 'credit');
     transact.appendChild(credLi);
 }
 
@@ -58,9 +61,17 @@ for(var j = 0; j < 2; j++) {
     debInput = parseInt(debInput);
     bank.debit(debInput);
     debLi.textContent = '$' + debInput + ' debit. Current balance: $' + bank.balance;
+    debLi.setAttribute('class', 'debit');
     transact.appendChild(debLi);
 }
 
 console.log('Final bank balance after two debits is: ' + bank.balance);
 
-eBalance.textContent = '$' + bank.balance;
+function updateBalance() {
+    eBalance.textContent = '$' + bank.balance;
+    if(bank.balance < 0) {
+        eBalance.setAttribute('class', 'debit');
+        return '';
+    }
+    eBalance.setAttribute('class', 'credit');
+}
