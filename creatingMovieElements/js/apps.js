@@ -2,7 +2,7 @@
  * Created by Adam on 7/9/2015.
  */
 
-var list = e('ul', '', {id: 'list'});
+var list = e('ul', '', {id: 'movies'}, {}, 'body');
 var button = document.getElementById('button');
 var moviesObj = [];
 
@@ -45,8 +45,6 @@ for(var i = 0; i < movies.length; i++) {
     titleWords = titleWords.join(' ');
     movies[i][0] = titleWords;
 }
-
-console.log(movies);
 
 //function for creating movie objects
 function Movie(title, runTime, release) {
@@ -129,18 +127,14 @@ function find() {
     }
 }
 
-//creates movie objects from the array and adds them to a new array
+/*
+creates movie objects from the array and adds them to a
+new array and created list items for each movie object
+ */
 for(var l = 0; l < movies.length; l++) {
     var movie = movies[l];
     var movieObj = Movie.create.apply({}, movie);
+    var li = e('li', movieObj.title, {}, {}, '#movies');
 
     moviesObj.push(movieObj);
 }
-
-//created list items for each movie object
-for(var k = 0; k < moviesObj.length; k++) {
-    var li = e('li', moviesObj[k].title);
-    list.appendChild(li);
-}
-
-document.body.appendChild(list);
