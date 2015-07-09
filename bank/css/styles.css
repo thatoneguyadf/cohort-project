@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+h1 {
+    margin: 70px 0;
+    font-size: 60px;
+}
+
+h2 {
+    margin-bottom: 50px;
+    font-size: 40px;
+}
+
+div {
+    margin-bottom: 70px;
+    font-size: 40px;
+}
