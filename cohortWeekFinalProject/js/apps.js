@@ -37,6 +37,10 @@ newMovieBtn.addEventListener('click', function () {
 
 movieForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    if(!movieForm.movieTitle.value) {
+        newMovieForm.classList.add('hidden');
+        return '';
+    }
     var genreInputs = document.getElementsByName('genre');
     var genre;
     list.innerHTML = '';
