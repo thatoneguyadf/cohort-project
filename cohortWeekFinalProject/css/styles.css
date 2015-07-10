@@ -1,0 +1,47 @@
+.all {
+    background-color: red;
+    height: 100%;
+    color: #eee;
+}
+
+.first {
+    margin-top: 50px;
+}
+
+.newMovie {
+    margin: 0 10px;
+}
+
+textarea {
+    margin-top: 15px;
+}
+
+#movieFormContainer {
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #222222;
+    border-radius: 10px;
+}
+
+#submit {
+    background-color: white;
+}
+
+input {
+    color: black;
+}
+
+textarea {
+    color: black;
+}
+
+#movies {
+    list-style: none;
+    padding: 0;
+    margin-left: 30px;
+}
+
+h1 {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movies by TOG84</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!--my css-->
+    <link rel="stylesheet" href="css/styles.css"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Movies by TOG84</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="newMovie"><a href="#">New Movie</a></li>
+                </ul>
+                <form class="navbar-form navbar-right" id="search">
+                    <input name="searchItem" type="text" class="form-control" placeholder="Search Movies...">
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid all">
+        <div class="row first">
+            <div class="col-sm-12 col-md-8">
+                <h1>Movies:</h1>
+                <ul id="movies"></ul>
+            </div>
+            <div id="movieFormContainer" class="col-sm-12 col-md-4 hidden">
+                <form id="movieForm">
+                    <input name="movieTitle" type="text" class="form-group col-sm-12" placeholder="Movie Title" />
+                    <input name="runTime" type="number" class="form-group col-sm-12" placeholder="Running Time in minutes" />
+                    <input name="release" type="number" class="form-group col-sm-12" placeholder="Year Released" />
+                    <div>
+                        <input name="genre" type="radio" class="radio-inline" value="comedy"> Comedy</input>
+                        <input name="genre" type="radio" class="radio-inline" value="drama"> Drama</input>
+                        <input name="genre" type="radio" class="radio-inline" value="action"> Action</input>
+                        <input name="genre" type="radio" class="radio-inline" value="horror"> Horror</input>
+                    </div>
+                    <textarea name="description" rows="5" cols="56" class="form-group">Movie Description...</textarea>
+                    <input type="submit" class="form-control" id="submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<!--my js-->
+<script src="js/apps.js"></script>
+</body>
+</html>

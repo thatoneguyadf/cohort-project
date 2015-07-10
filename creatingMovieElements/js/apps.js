@@ -1,13 +1,8 @@
-/**
- * Created by Adam on 7/9/2015.
- */
+/*============================== variable space ========================================*/
 
 var list = e('ul', '', {id: 'movies'}, {}, 'body');
 var button = document.getElementById('button');
 var moviesObj = [];
-
-button.addEventListener('click', find);
-
 var movies = [
     ['star wars', 121, 1977],
     ['empire strikes back', 124, 1980],
@@ -21,6 +16,14 @@ var movies = [
     ['the hitchhiker\'s guide to the galaxy', 109, 2005]
 ];
 
+list.addEventListener('click', function (evt) {
+    alert(evt.target.getAttribute('rel'));
+});
+button.addEventListener('click', find);
+
+
+/*============================== function space ========================================*/
+
 //capitalizes first letter of a string
 function capitalize(str) {
     if (!str || typeof str !== "string") {
@@ -28,22 +31,6 @@ function capitalize(str) {
     }
 
     return str[0].toUpperCase() + str.slice(1);
-}
-
-//cyles through movies array and calls capitalize for each word in the titles
-for(var i = 0; i < movies.length; i++) {
-    var titleWords = movies[i][0].split(' ');
-    for(var j = 0; j < titleWords.length; j++) {
-        var noCap = ['of', 'the', 'and', 'for', 'in', 'to'];
-        if(j !== 0 && noCap.indexOf(titleWords[j]) > -1) {
-            continue;
-        }
-
-        titleWords[j] = capitalize(titleWords[j]);
-    }
-
-    titleWords = titleWords.join(' ');
-    movies[i][0] = titleWords;
 }
 
 //function for creating movie objects
@@ -127,6 +114,25 @@ function find() {
     }
 }
 
+
+/*============================== execution space ========================================*/
+
+//cyles through movies array and calls capitalize for each word in the titles
+for(var i = 0; i < movies.length; i++) {
+    var titleWords = movies[i][0].split(' ');
+    for(var j = 0; j < titleWords.length; j++) {
+        var noCap = ['of', 'the', 'and', 'for', 'in', 'to'];
+        if(j !== 0 && noCap.indexOf(titleWords[j]) > -1) {
+            continue;
+        }
+
+        titleWords[j] = capitalize(titleWords[j]);
+    }
+
+    titleWords = titleWords.join(' ');
+    movies[i][0] = titleWords;
+}
+
 /*
 creates movie objects from the array and adds them to a
 new array and created list items for each movie object
@@ -134,7 +140,11 @@ new array and created list items for each movie object
 for(var l = 0; l < movies.length; l++) {
     var movie = movies[l];
     var movieObj = Movie.create.apply({}, movie);
-    var li = e('li', movieObj.title, {}, {}, '#movies');
+    var li = e('li', movieObj.title, {'rel': movieObj.title}, {}, '#movies');
+
+    /*li.addEventListener('click', function () {
+        alert(this.getAttribute('rel'));
+    });*/
 
     moviesObj.push(movieObj);
 }

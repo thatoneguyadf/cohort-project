@@ -15,7 +15,7 @@ var movies = [
 	['the princess bride', 98, 1987],
 	['serenity', 119, 2005],
 	['the hitchhiker\'s guide to the galaxy', 109, 2005]
-]
+];
 
 //capitalizes first letter of a string
 function capitalize(str) {
@@ -108,10 +108,9 @@ for(var k = 0; k < moviesObj.length; k++) {
 //searches movie array for a specified movie
 function find() {
 	var search = prompt('What movie are you looking for?');
+	var present = false;
 
 	search = search.toLowerCase();
-
-	var present = false;
 
 	for(var i = 0; i < moviesObj.length; i++){
 		var movie = moviesObj[i];
