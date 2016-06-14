@@ -49,7 +49,7 @@
   }
 // sows the new movie form
   function showNewMovieForm() {
-    newMovieForm.classList.remove('hidden');
+    newMovieForm.classList.toggle('hidden');
   }
 // when the movie form is submitted this takes the data and creates a new movie object and clears and reloads the list
   function newMovieSubmit(evt) {
