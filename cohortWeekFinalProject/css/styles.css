@@ -3,55 +3,67 @@
     height: 100%;
     color: #eee;
 }
-
+.active {
+    background-color: red !important;
+    border-color: red !important;
+}
 .first {
     margin-top: 50px;
 }
-
 .newMovie {
     margin: 0 10px;
 }
-
 textarea {
     margin-top: 15px;
 }
-
 #movieFormContainer {
-    margin-top: 5px;
     padding: 10px;
     background-color: #222222;
-    border-radius: 10px;
 }
-
 #submit {
     background-color: white;
 }
-
 input {
     color: black;
 }
-
 textarea {
     color: black;
 }
-
 #movies {
     list-style: none;
     padding: 0;
 }
-
 h1 {
     font-weight: bold;
     text-decoration: underline;
 }
-
-#main {
+.main {
     background-color: white;
     color: black;
     padding: 0;
 }
-
 .flex {
     display: flex;
     justify-content: space-between;
+    margin: 5px 0;
+}
+.panel {
+    border-radius: 0;
+}
+.fixed {
+    position: fixed;
+}
+#movieDetails {
+    top: 50px;
+    left: 50%;
+}
+#movieFormContainer {
+    top: 50px;
+    right: 0;
+}
+.list-group-item {
+    border-radius: 0 !important;
+}
+#mdHeading {
+    height: 90px;
 }

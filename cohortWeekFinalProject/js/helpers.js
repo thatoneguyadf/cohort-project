@@ -16,5 +16,10 @@
       container.appendChild(element);
     return element;
   }
+  // generates a random number based on max number passed in
+  function randomNum(max) {
+    return Math.ceil(Math.random() * max);
+  }
   window.e = e;
+  window.randomNum = randomNum;
 }());

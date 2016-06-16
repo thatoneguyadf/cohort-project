@@ -40,19 +40,17 @@
   </div>
 </nav>
 
-<div class="container-fluid all">
+<div class="container-fluid all" id="top">
   <div class="row first">
-    <div class="col-md-1"></div>
-    <div class="col-sm-10 panel panel-default" id="main">
+    <div class="col-sm-12 col-md-6  panel panel-default main">
       <div class="panel-heading">
         <h1>Movies:</h1>
       </div>
       <div class="panel-body">
-        <ul id="movies"></ul>
+        <ul id="movies" class="list-group"></ul>
       </div>
     </div>
-    <div class="col-md-1"></div>
-    <div id="movieFormContainer" class="col-sm-12 col-md-4 hidden">
+    <div id="movieFormContainer" class="col-sm-12 col-md-4 col-md-offset-2 hidden fixed">
       <form id="movieForm">
         <input name="movieTitle" type="text" class="form-group col-sm-12" placeholder="Movie Title"/>
         <input name="runTime" type="number" class="form-group col-sm-12" placeholder="Running Time in minutes"/>
@@ -67,6 +65,10 @@
         <input type="submit" class="form-control" id="submit"/>
       </form>
     </div>
+    <div class="col-sm-12 col-md-5 hidden hidden-sm panel panel-default main fixed" id="movieDetails">
+      <div class="panel-heading" id="mdHeading"></div>
+      <div class="panel-body" id="mdBody"></div>
+    </div>
   </div>
 </div>
 
@@ -74,7 +76,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/element.js"></script>
+<script type="text/javascript" src="js/helpers.js"></script>
 <script type="text/javascript" src="js/movies.js"></script>
 <!--my js-->
 <script type="text/javascript" src="js/apps.js"></script>

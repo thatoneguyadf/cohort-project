@@ -2,12 +2,16 @@
 /*============================================= imports =============================================================*/
   var e = window.e;
   var movieConstruct = window.movie;
+  var randomNum = window.randomNum;
 /*============================================ variables ============================================================*/
   var list = document.getElementById('movies');
   var search = document.getElementById('search');
   var newMovieBtn = document.querySelector('.newMovie');
   var newMovieForm = document.getElementById('movieFormContainer');
   var movieForm = document.getElementById('movieForm');
+  var movieDetails = document.getElementById('movieDetails');
+  var mdHeading = document.getElementById('mdHeading');
+  var mdBody = document.getElementById('mdBody');
   var movies = localStorage.movies ? JSON.parse(localStorage.movies) : [
     ['star wars', 121, 1977, 'drama', 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire\'s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.'],
     ['empire strikes back', 124, 1980, 'drama', 'After the rebels have been brutally overpowered by the Empire on their newly established base, Luke Skywalker takes advanced Jedi training with Master Yoda, while his friends are pursued by Darth Vader as part of his plan to capture Luke.'],
@@ -21,10 +25,12 @@
     ['the hitchhiker\'s guide to the galaxy', 109, 2005, 'comedy', 'Mere seconds before the Earth is to be demolished by an alien construction crew, journeyman Arthur Dent is swept off the planet by his friend Ford Prefect, a researcher penning a new edition of "The Hitchhiker\'s Guide to the Galaxy."']
   ];
   var movieObjs = [];
+  var dailyRate = 3;
 /*=========================================== event listeners =======================================================*/
   search.addEventListener('submit', find);
   newMovieBtn.addEventListener('click', showNewMovieForm);
   movieForm.addEventListener('submit', newMovieSubmit);
+  list.addEventListener('click', listClick);
 /*============================================= callbacks ===========================================================*/
 // searches movie array for a specified movie
   function find(evt) {
@@ -32,23 +38,63 @@
     var searcher = search.searchItem.value.toLowerCase();
     search.searchItem.value = defaultStatus;
     var present = false;
-    for (var i = 0; i < movieObjs.length; i++) {
-      var movie = movieObjs[i];
+    var index = 0;
+    movieObjs.forEach(function (movie) {
       if (searcher === movie.title.toLowerCase()) {
-        alert(movie.title + ' was released in ' + movie.release);
+        index = movieObjs.indexOf(movie);
+        listClick.call(list, index);
         present = true;
-        break;
+      }
+    });
+    if (index > 1) 
+      window.location.hash = 'movie-' + (index - 2);
+    else
+      window.location.hash = 'top';
+    if (!present) {
+      movieDetails.classList.remove('hidden');
+      mdHeading.innerHTML = '<h2>Movie Not Found</h2>';
+      mdBody.innerHTML = '<p>Sorry! We were unable to find ' + searcher +
+        ' in our database. Please enter a different search or select a movie from the list.</p>';
+      for (var i = 0; i < list.childNodes.length; i++) {
+        list.childNodes[i].classList.remove('active');
       }
     }
-    if (!present)
-      alert('Sorry, that movie is not on the list.');
   }
 // alerts a movie's short description when it is clicked on
-  function listClick() {
-    this.lastChild.classList.toggle('hidden');
+  function listClick(evt) {
+    newMovieForm.classList.add('hidden');
+    mdHeading.innerHTML = '';
+    mdBody.innerHTML = '';
+    var index = evt.target ? evt.target.dataset.movieidx : evt;
+    for (var i = 0; i < this.childNodes.length; i++) {
+      if (i == index)
+        this.childNodes[i].classList.add('active');
+      else
+        this.childNodes[i].classList.remove('active');
+    }
+    var movieObj = movieObjs[index];
+    var available = movieObj.checkedIn ? 'Available' : 'Unavailable';
+    e('p', available, {}, {}, mdBody);
+    e('h2', movieObj.title, {}, {}, mdHeading);
+    e('p', movieObj.runningTimeHours(), {}, {}, mdBody);
+    e('p', movieObj.release, {}, {}, mdBody);
+    e('p', movieObj.genre, {}, {}, mdBody);
+    e('p', movieObj.description, {}, {}, mdBody);
+    if (movieObj.checkedIn) {
+      var checkOutBtn = e('button', 'Check Out', {'data-movieIdx': index}, {}, mdBody);
+      checkOutBtn.addEventListener('click', checkOut);
+    } else {
+      var checkInBtn = e('button', 'Check In', {'data-movieIdx': index}, {}, mdBody);
+      checkInBtn.addEventListener('click', checkIn);
+    }
+    movieDetails.classList.remove('hidden');
   }
 // sows the new movie form
   function showNewMovieForm() {
+    movieDetails.classList.add('hidden');
+    for (var i = 0; i < list.childNodes.length; i++) {
+      list.childNodes[i].classList.remove('active');
+    }
     newMovieForm.classList.toggle('hidden');
   }
 // when the movie form is submitted this takes the data and creates a new movie object and clears and reloads the list
@@ -75,6 +121,18 @@
     capTheArray();
     makeObjAndLi();
   }
+  function checkOut() {
+    var movie = movieObjs[this.dataset.movieidx];
+    var checkOutString = movie.checkOut();
+    alert(checkOutString);
+    listClick.call(list, this.dataset.movieidx);
+  }
+  function checkIn() {
+    var movie = movieObjs[this.dataset.movieidx];
+    var checkInString = movie.checkIn(dailyRate, randomNum(14));
+    alert(checkInString);
+    listClick.call(list, this.dataset.movieidx);
+  }
 /*============================================= functions ===========================================================*/
 // capitalizes first letter of a string
   function capitalize(str) {
@@ -100,20 +158,28 @@
   }
 // creates movie objects from the array and adds them to a new array and created list items for each movie object
   function makeObjAndLi() {
-    for (var l = 0; l < movies.length; l++) {
-      var movie = movies[l];
+    movies.forEach(function (movie) {
       var movieObj = movieConstruct.apply({}, movie);
-      var li = e('li', '', {'rel': movieObj.preview(), 'class': 'panel panel-default'}, {}, list);
-      var panelHeading = e('div', '', {'class': 'panel-heading flex'}, {}, li);
-      var panelBody = e('div', movieObj.preview(), {'class': 'panel-body hidden'}, {}, li);
-      var title = e('h3', movieObj.title, {}, {}, panelHeading);
-      var infoHolder = e('div','', {}, {}, panelHeading);
-      var genre = e('div', 'genre: ' + movieObj.genre, {}, {}, infoHolder);
-      var year = e('div', 'year released: ' + movieObj.release, {}, {}, infoHolder);
-      var time = e('div', 'running time: ' + movieObj.runningTimeHours(), {}, {}, infoHolder);
-      li.addEventListener('click', listClick);
-      movieObjs.push(movieObj);
-    }
+      movieObjs.push(movieObj)
+    });
+    movieObjs.sort(function (a, b) {
+      if (a.title > b.title)
+        return 1;
+      else if (a.title < b.title)
+        return -1;
+      return 0
+    });
+    movieObjs.forEach(function (movieObj) {
+      var li = e('li', '',
+        {id: 'movie-' + movieObjs.indexOf(movieObj), 'data-movieIdx': movieObjs.indexOf(movieObj), 'class': 'list-group-item flex'},
+        {},
+        list);
+      e('h3', movieObj.title, {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, li);
+      var infoHolder = e('div','', {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, li);
+      e('div', 'genre: ' + movieObj.genre, {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, infoHolder);
+      e('div', 'year released: ' + movieObj.release, {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, infoHolder);
+      e('div', 'running time: ' + movieObj.runningTimeHours(), {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, infoHolder);
+    });
     localStorage.movies = JSON.stringify(movies);
   }
 /*========================================== execution ==============================================================*/
