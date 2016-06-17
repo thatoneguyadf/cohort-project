@@ -1,20 +1,20 @@
 (function () {
   // creates new elements
   function e(elementType, text, atributes, styles, selector) {
-    var $element = $('<' + elementType + '></' + elementType +'>');
-    $element.text(text);
+    var element = document.createElement(elementType);
+    element.textContent = text || '';
     for(var attr in atributes) {
       if(atributes.hasOwnProperty(attr))
-        $element.attr(attr, atributes[attr]);
+        element.setAttribute(attr, atributes[attr]);
     }
     for(var style in styles) {
       if(styles.hasOwnProperty(style))
-        $element.css(styles);
+        element.style[style] = styles[style];
     }
-    var $container = typeof(selector) === 'string' ? $(selector) : selector;
-    if($container)
-      $container.append($element);
-    return $element;
+    var container = typeof(selector) === 'string' ? document.querySelector(selector) : selector;
+    if(container)
+      container.appendChild(element);
+    return element;
   }
   // generates a random number based on max number passed in
   function randomNum(max) {

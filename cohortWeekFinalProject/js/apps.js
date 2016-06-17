@@ -4,14 +4,14 @@
   var movieConstruct = window.movie;
   var randomNum = window.randomNum;
 /*============================================ variables ============================================================*/
-  var $list = $('#movies');
-  var $search = $('#search');
-  var $newMovieBtn = $('.newMovie');
-  var $newMovieForm = $('#movieFormContainer');
-  var $movieForm = $('#movieForm');
-  var $movieDetails = $('#movieDetails');
-  var $mdHeading = $('#mdHeading');
-  var $mdBody = $('#mdBody');
+  var list = document.getElementById('movies');
+  var search = document.getElementById('search');
+  var newMovieBtn = document.querySelector('.newMovie');
+  var newMovieForm = document.getElementById('movieFormContainer');
+  var movieForm = document.getElementById('movieForm');
+  var movieDetails = document.getElementById('movieDetails');
+  var mdHeading = document.getElementById('mdHeading');
+  var mdBody = document.getElementById('mdBody');
   var movies = localStorage.movies ? JSON.parse(localStorage.movies) : [
     ['star wars', 121, 1977, 'drama', 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire\'s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.'],
     ['empire strikes back', 124, 1980, 'drama', 'After the rebels have been brutally overpowered by the Empire on their newly established base, Luke Skywalker takes advanced Jedi training with Master Yoda, while his friends are pursued by Darth Vader as part of his plan to capture Luke.'],
@@ -27,23 +27,22 @@
   var movieObjs = [];
   var dailyRate = 3;
 /*=========================================== event listeners =======================================================*/
-  $search.submit(find);
-  $newMovieBtn.click(showNewMovieForm);
-  $movieForm.submit(newMovieSubmit);
-  $list.click(listClick);
+  search.addEventListener('submit', find);
+  newMovieBtn.addEventListener('click', showNewMovieForm);
+  movieForm.addEventListener('submit', newMovieSubmit);
+  list.addEventListener('click', listClick);
 /*============================================= callbacks ===========================================================*/
 // searches movie array for a specified movie
   function find(evt) {
     evt.preventDefault();
-    var $input = $('input[name=searchItem]');
-    var searcher = $input.val();
-    $input.val(defaultStatus);
+    var searcher = search.searchItem.value.toLowerCase();
+    search.searchItem.value = defaultStatus;
     var present = false;
     var index = 0;
-    $.each(movieObjs, function (idx, movie) {
+    movieObjs.forEach(function (movie) {
       if (searcher === movie.title.toLowerCase()) {
-        index = idx;
-        listClick.call($list, index);
+        index = movieObjs.indexOf(movie);
+        listClick.call(list, index);
         present = true;
       }
     });
@@ -52,20 +51,20 @@
     else
       window.location.hash = 'top';
     if (!present) {
-      $movieDetails.show();
-      $mdHeading.html('<h2>Movie Not Found</h2>');
-      $mdBody.html('<p>Sorry! We were unable to find ' + searcher +
-        ' in our database. Please enter a different search or select a movie from the list.</p>');
-      for (var i = 0; i < $list.childNodes.length; i++) {
-        $list.childNodes[i].classList.remove('active');
+      movieDetails.classList.remove('hidden');
+      mdHeading.innerHTML = '<h2>Movie Not Found</h2>';
+      mdBody.innerHTML = '<p>Sorry! We were unable to find ' + searcher +
+        ' in our database. Please enter a different search or select a movie from the list.</p>';
+      for (var i = 0; i < list.childNodes.length; i++) {
+        list.childNodes[i].classList.remove('active');
       }
     }
   }
 // alerts a movie's short description when it is clicked on
   function listClick(evt) {
-    $newMovieForm.classList.add('hidden');
-    $mdHeading.innerHTML = '';
-    $mdBody.innerHTML = '';
+    newMovieForm.classList.add('hidden');
+    mdHeading.innerHTML = '';
+    mdBody.innerHTML = '';
     var index = evt.target ? evt.target.dataset.movieidx : evt;
     for (var i = 0; i < this.childNodes.length; i++) {
       if (i == index)
@@ -75,48 +74,48 @@
     }
     var movieObj = movieObjs[index];
     var available = movieObj.checkedIn ? 'Available' : 'Unavailable';
-    e('p', available, {}, {}, $mdBody);
-    e('h2', movieObj.title, {}, {}, $mdHeading);
-    e('p', movieObj.runningTimeHours(), {}, {}, $mdBody);
-    e('p', movieObj.release, {}, {}, $mdBody);
-    e('p', movieObj.genre, {}, {}, $mdBody);
-    e('p', movieObj.description, {}, {}, $mdBody);
+    e('p', available, {}, {}, mdBody);
+    e('h2', movieObj.title, {}, {}, mdHeading);
+    e('p', movieObj.runningTimeHours(), {}, {}, mdBody);
+    e('p', movieObj.release, {}, {}, mdBody);
+    e('p', movieObj.genre, {}, {}, mdBody);
+    e('p', movieObj.description, {}, {}, mdBody);
     if (movieObj.checkedIn) {
-      var checkOutBtn = e('button', 'Check Out', {'data-movieIdx': index}, {}, $mdBody);
+      var checkOutBtn = e('button', 'Check Out', {'data-movieIdx': index}, {}, mdBody);
       checkOutBtn.addEventListener('click', checkOut);
     } else {
-      var checkInBtn = e('button', 'Check In', {'data-movieIdx': index}, {}, $mdBody);
+      var checkInBtn = e('button', 'Check In', {'data-movieIdx': index}, {}, mdBody);
       checkInBtn.addEventListener('click', checkIn);
     }
-    $movieDetails.classList.remove('hidden');
+    movieDetails.classList.remove('hidden');
   }
 // sows the new movie form
   function showNewMovieForm() {
-    $movieDetails.classList.add('hidden');
-    for (var i = 0; i < $list.childNodes.length; i++) {
-      $list.childNodes[i].classList.remove('active');
+    movieDetails.classList.add('hidden');
+    for (var i = 0; i < list.childNodes.length; i++) {
+      list.childNodes[i].classList.remove('active');
     }
-    $newMovieForm.classList.toggle('hidden');
+    newMovieForm.classList.toggle('hidden');
   }
 // when the movie form is submitted this takes the data and creates a new movie object and clears and reloads the list
   function newMovieSubmit(evt) {
     evt.preventDefault();
-    if (!$movieForm.movieTitle.value) {
-      $newMovieForm.classList.add('hidden');
+    if (!movieForm.movieTitle.value) {
+      newMovieForm.classList.add('hidden');
       return;
     }
   // clear movie list in the DOM
-    $list.innerHTML = '';
+    list.innerHTML = '';
     var movie = [
-      $movieForm.movieTitle.value,
-      $movieForm.runTime.value,
-      $movieForm.release.value,
-      $movieForm.genre.value,
-      $movieForm.description.value
+      movieForm.movieTitle.value,
+      movieForm.runTime.value,
+      movieForm.release.value,
+      movieForm.genre.value,
+      movieForm.description.value
     ];
     movies.push(movie);
-    $movieForm.reset();
-    $newMovieForm.classList.add('hidden');
+    movieForm.reset();
+    newMovieForm.classList.add('hidden');
 
     // rebuilds the movie list in the DOM
     capTheArray();
@@ -126,13 +125,13 @@
     var movie = movieObjs[this.dataset.movieidx];
     var checkOutString = movie.checkOut();
     alert(checkOutString);
-    listClick.call($list, this.dataset.movieidx);
+    listClick.call(list, this.dataset.movieidx);
   }
   function checkIn() {
     var movie = movieObjs[this.dataset.movieidx];
     var checkInString = movie.checkIn(dailyRate, randomNum(14));
     alert(checkInString);
-    listClick.call($list, this.dataset.movieidx);
+    listClick.call(list, this.dataset.movieidx);
   }
 /*============================================= functions ===========================================================*/
 // capitalizes first letter of a string
@@ -174,7 +173,7 @@
       var li = e('li', '',
         {id: 'movie-' + movieObjs.indexOf(movieObj), 'data-movieIdx': movieObjs.indexOf(movieObj), 'class': 'list-group-item flex'},
         {},
-        $list);
+        list);
       e('h3', movieObj.title, {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, li);
       var infoHolder = e('div','', {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, li);
       e('div', 'genre: ' + movieObj.genre, {'data-movieIdx': movieObjs.indexOf(movieObj)}, {}, infoHolder);
