@@ -67,3 +67,6 @@ h1 {
 #mdHeading {
     height: 90px;
 }
+.label-danger {
+    background-color: red !important;
+}

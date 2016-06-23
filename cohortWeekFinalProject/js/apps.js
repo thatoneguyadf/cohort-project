@@ -13,9 +13,17 @@
   var mdHeading = document.getElementById('mdHeading');
   var mdBody = document.getElementById('mdBody');
   var movies = localStorage.movies ? JSON.parse(localStorage.movies) : [
-    ['star wars', 121, 1977, 'drama', 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the universe from the Empire\'s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.'],
-    ['empire strikes back', 124, 1980, 'drama', 'After the rebels have been brutally overpowered by the Empire on their newly established base, Luke Skywalker takes advanced Jedi training with Master Yoda, while his friends are pursued by Darth Vader as part of his plan to capture Luke.'],
-    ['return of the jedi', 134, 1983, 'drama', 'After rescuing Han Solo from the palace of Jabba the Hutt, the rebels attempt to destroy the second Death Star, while Luke struggles to make Vader return from the dark side of the Force.'],
+    ['star wars episode iv: a new hope', 121, 1977, 'drama', 'Luke Skywalker joins forces with a Jedi Knight, a' +
+    ' cocky pilot,' +
+    ' a' +
+    ' wookiee and' +
+    ' two droids to save the universe from the Empire\'s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.'],
+    ['star wars episode v: the empire strikes back', 124, 1980, 'drama', 'After the rebels have been brutally' +
+    ' overpowered' +
+    ' by' +
+    ' the Empire on their newly established base, Luke Skywalker takes advanced Jedi training with Master Yoda, while his friends are pursued by Darth Vader as part of his plan to capture Luke.'],
+    ['star wars episode vi: the return of the jedi', 134, 1983, 'drama', 'After rescuing Han Solo from the palace of' +
+    ' Jabba the Hutt, the rebels attempt to destroy the second Death Star, while Luke struggles to make Vader return from the dark side of the Force.'],
     ['spaceballs', 96, 1987, 'comedy', 'Planet Spaceball\'s President Skroob sends Lord Dark Helmet to steal Planet Druidia\'s abundant supply of air to replenish their own, and only Lone Starr can stop them.'],
     ['monty python and the holy grail', 91, 1975, 'comedy', 'King Arthur and his knights embark on a low-budget search for the Grail, encountering many very silly obstacles.'],
     ['time bandits', 110, 1981, 'action', 'A young boy accidentally joins a band of dwarves as they jump from era to era looking for treasure to steal.'],
@@ -74,17 +82,19 @@
     }
     var movieObj = movieObjs[index];
     var available = movieObj.checkedIn ? 'Available' : 'Unavailable';
-    e('p', available, {}, {}, mdBody);
     e('h2', movieObj.title, {}, {}, mdHeading);
+    var availability = e('span', available, {'class': 'label'}, {}, mdHeading);
     e('p', movieObj.runningTimeHours(), {}, {}, mdBody);
     e('p', movieObj.release, {}, {}, mdBody);
     e('p', movieObj.genre, {}, {}, mdBody);
     e('p', movieObj.description, {}, {}, mdBody);
     if (movieObj.checkedIn) {
       var checkOutBtn = e('button', 'Check Out', {'data-movieIdx': index}, {}, mdBody);
+      availability.classList.add('label-success');
       checkOutBtn.addEventListener('click', checkOut);
     } else {
       var checkInBtn = e('button', 'Check In', {'data-movieIdx': index}, {}, mdBody);
+      availability.classList.add('label-danger');
       checkInBtn.addEventListener('click', checkIn);
     }
     movieDetails.classList.remove('hidden');
